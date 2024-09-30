@@ -1,0 +1,34 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@using Umbraco.Cms.Core
+@using Umbraco.Cms.Core.Models.PublishedContent
+@using Umbraco.Cms.Core.Routing
+@using Umbraco.Extensions
+
+@inject IPublishedValueFallback PublishedValueFallback
+@inject IPublishedUrlProvider PublishedUrlProvider
+@*
+    This snippet makes a list of links to the of children of the current page using an unordered HTML list.
+
+    How it works:
+    - It uses the Children method to get all child pages
+    - It then uses the OrderByDescending() method, which takes the property to sort. In this case the page's creation date.
+    - It then generates links so the visitor can go to each page
+*@
+
+@{ 
+    var selectionCompletedProjects = Model.Children
+                                            .Where(x => x.IsVisible(PublishedValueFallback))
+                                            .Where(x => x.Value<string>("status")=="Finished")
+                                            .OrderByDescending(x => x.CreateDate)
+                                            .ToArray();
+}
+
+@if (selectionCompletedProjects?.Length > 0)
+{
+    <ul>
+        @foreach (var item in selectionCompletedProjects)
+        {
+            <li><a href="@item.Url(PublishedUrlProvider)">@item.Value("title")</a></li>
+        }
+    </ul>
+}

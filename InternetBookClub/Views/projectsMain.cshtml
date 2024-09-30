@@ -1,0 +1,44 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+	Layout = "master.cshtml";
+}
+
+<!-- Project item query -->
+@{
+    var selectionProjects = Umbraco.Content(Guid.Parse("06aec5ae-d274-4a3c-b691-a84f241cd2bb"))
+                            .ChildrenOfType("projectsItem")
+                            .Where(x => x.IsVisible())
+                            .OrderBy(x => x.CreateDate);
+
+    var selectionProjectCount = Umbraco.Content(Guid.Parse("06aec5ae-d274-4a3c-b691-a84f241cd2bb"))
+                            .ChildrenOfType("projectsItem")
+                            .Where(x => x.IsVisible());
+}
+
+<h1> @Model.Value("title") </h1>
+<h4> @Model.Value("mainContent") </h4>
+<br>
+<h5> Total projects: @selectionProjectCount.Count() </h5>        
+
+<div class="container">
+    <div class="row section">
+        <div class="col-md-12">
+            
+            <h3> Lastest projects </h3>
+            <ul>
+                @foreach (var item in selectionProjects)
+                {
+                    <li>
+                        <a href="@item.Url()">@item.Value("title")</a>
+                        <p> Project status: @item.Value("status") </p>
+                    </li>
+                }
+            </ul>
+
+            <h3> Completed projects </h3>
+            @await Html.PartialAsync("myviews/CompletedProjects")
+
+        </div>
+    </div>
+</div>

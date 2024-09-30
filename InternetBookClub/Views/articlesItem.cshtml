@@ -1,0 +1,9 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+	Layout = "master.cshtml";
+}
+
+<h1>@Model.Value("title")</h1>
+<p>@Model.Value("mainContent")</p>
+<p>Created on @Model.Value("dateCreated") by @Model.Value("author")</p>

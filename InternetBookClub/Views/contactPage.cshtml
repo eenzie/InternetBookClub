@@ -1,0 +1,10 @@
+﻿@using InternetBookClub.ViewModels
+@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+	Layout = "master.cshtml";
+}
+
+@{ 
+	Html.RenderPartial("~/Views/ContactForm.cshtml", new ContactForm());
+}

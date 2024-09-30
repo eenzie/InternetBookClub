@@ -1,0 +1,68 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@using Umbraco.Cms.Core
+@using Umbraco.Cms.Core.Models.PublishedContent
+@using Umbraco.Cms.Core.Routing
+@using Umbraco.Extensions
+
+@inject IPublishedValueFallback PublishedValueFallback
+@inject IPublishedUrlProvider PublishedUrlProvider
+@*
+    This snippet displays a list of links of the pages immediately under the top-most page in the content tree.
+    This is the home page for a standard website.
+    It also highlights the current active page/section in the navigation with the CSS class "current".
+*@
+
+@* 
+    Selects the root content node (Home Page), if there are any child node below, 
+    it will run through them and add them to an unordered list 
+*@
+@{ 
+    var selection = Model.Root()
+                        .Children
+                        .Where(x => x.IsVisible(PublishedValueFallback))
+                        .ToArray(); 
+
+    var selectionProjects = Umbraco.Content(Guid.Parse("06aec5ae-d274-4a3c-b691-a84f241cd2bb"))
+                                    .ChildrenOfType("projectsItem")
+                                    .Where(x => x.IsVisible());
+    
+	var selectionProjectMain = Umbraco.ContentAtRoot()
+                                    .FirstOrDefault()
+                                    .ChildrenOfType("projectsMain")
+                                    .Where(x => x.IsVisible()).FirstOrDefault();
+}
+
+@if (selection?.Length > 0)
+{
+    <div class="container">
+        <nav class="navbar navbar-expand navbar-light">
+            <!-- Nav bar brand item -->
+            <a class="navbar-brand font-weight-bold" href="@Model.Root().Url()">Cozy Books</a>
+
+            <!-- Links -->
+            <ul class="navbar-nav">
+
+                @foreach (var item in selection)
+                {
+                    <li class="@(item.IsAncestorOrSelf(Model) ? "current" : null)">
+                        <a class="nav-link" href="@item.Url(PublishedUrlProvider)">@item.Name</a>
+                    </li>
+                }
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="@selectionProjectMain.Url()" role="button" data-bs-toggle="dropdown" aria-expanded="false"> @selectionProjectMain.Name</a>
+
+                    <ul class="dropdown-menu">
+                        @foreach (var item in selectionProjects)
+                        {
+                            <li>
+                                <a class="dropdown-item" href="@item.Url()">@item.Name()</a>
+                            </li>
+                        }
+                    </ul>
+                </li>
+
+            </ul>
+        </nav>
+    </div>
+}

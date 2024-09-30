@@ -1,0 +1,35 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+	Layout = "master.cshtml";
+}
+
+<h1>@Model.Value("title")</h1>
+<h4>@Model.Value("mainContent")</h4>
+
+<div class="container">
+    <div class="row section">
+        <div class="col-md-12">
+            <h3>Lastest posts</h3>
+        </div>
+    </div>
+
+    <!-- Blog item query -->
+    @{
+        var selection = Umbraco.Content(Guid.Parse("5327aa6f-255b-415a-a1ec-3751fa807b75"))
+        .ChildrenOfType("articlesItem")
+        .Where(x => x.IsVisible())
+        .OrderBy(x => x.CreateDate);
+    }
+
+    <ul>
+        @foreach (var item in selection)
+        {
+            <li>
+                <a href="@item.Url()">@item.Value("title")</a>
+                <p> @item.CreateDate </p>
+            </li>
+        }
+    </ul>
+</div>

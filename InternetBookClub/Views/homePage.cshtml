@@ -1,0 +1,11 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+	Layout = "master.cshtml";
+}
+
+<h1>@Model.Value("siteTitle")</h1>
+
+<br>
+    <h1>@Model.Value("title")</h1>
+    <h4>@Model.Value("mainContent")</h4>
