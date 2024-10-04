@@ -2,7 +2,7 @@
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
 @using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
 @{
-	Layout = "master.cshtml";
+    Layout = "master.cshtml";
 }
 
 <h1>@Model.Value("title")</h1>
@@ -25,6 +25,7 @@
 
     <ul>
         @foreach (var item in selection)
+
         {
             <li>
                 <a href="@item.Url()">@item.Value("title")</a>

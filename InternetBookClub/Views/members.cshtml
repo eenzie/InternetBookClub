@@ -1,0 +1,38 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@using Umbraco.Cms.Core.Services;
+
+@inject IMemberService MemberService
+
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+
+@{
+	Layout = "master.cshtml";
+}
+
+@{
+var activeMembers = MemberService.GetMembersByGroup("Active");
+var prospectMembers = MemberService.GetMembersByGroup("Prospect");
+}
+
+<h4> Prospect Members </h4>
+@foreach (var prospect in prospectMembers) 
+{
+	<p>
+	@(prospect.GetValue("firstName") + " "
+	+ prospect.GetValue("lastName")) <br/>
+	Mobile: @prospect.GetValue("mobile")<br />
+	</p>
+}
+<br>
+<h4> Active Members </h4>
+@foreach (var active in activeMembers) 
+{
+	<p>
+	@(active.GetValue("firstName") + " "
+	+ active.GetValue("lastName")) <br/>
+	@active.GetValue("address")<br />
+	@(active.GetValue("postCode") + " "
+	+ active.GetValue("city"))
+	Mobile: @active.GetValue("mobile")<br />
+	</p>
+}
