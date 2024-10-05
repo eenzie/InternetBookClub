@@ -16,29 +16,32 @@
                             .Where(x => x.IsVisible());
 }
 
-<h1> @Model.Value("title") </h1>
-<h4> @Model.Value("mainContent") </h4>
-<br>
-<h5> Total projects: @selectionProjectCount.Count() </h5>        
-
-<div class="container">
-    <div class="row section">
-        <div class="col-md-12">
-            
-            <h3> Lastest projects </h3>
-            <ul>
+<div class="p-2 bg-dark text-white rounded">
+    <h1> @Model.Value("title") </h1>
+    <h4> @Model.Value("mainContent") </h4>
+    <br>
+    <h5> Total projects: @selectionProjectCount.Count() </h5>
+    
+    <div class="row">
+        <div class="col-md-4">
+            <ul class="list-group bs-dark">
+                <h3> Lastest projects </h3>
                 @foreach (var item in selectionProjects)
                 {
-                    <li>
-                        <a href="@item.Url()">@item.Value("title")</a>
-                        <p> Project status: @item.Value("status") </p>
-                    </li>
+                    <div class="p-3 text-primary-emphasis bg-success-subtle border border-secondary rounded-2">
+                        <li class="list-group-item pl-5">
+                            <a href="@item.Url()">@item.Value("title")</a>
+                            <p> Project status: @item.Value("status") </p>
+                        </li>
+                    </div>
+                    <br>
                 }
             </ul>
-
-            <h3> Completed projects </h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
             @await Html.PartialAsync("myviews/CompletedProjects")
-
         </div>
     </div>
 </div>

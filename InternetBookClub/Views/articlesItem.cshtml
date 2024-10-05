@@ -4,6 +4,12 @@
 	Layout = "master.cshtml";
 }
 
-<h1>@Model.Value("title")</h1>
-<p>@Model.Value("mainContent")</p>
-<p>Created on @Model.Value("dateCreated") by @Model.Value("author")</p>
+<div class="row">
+    <div class="col-md-6">
+		<div class="p-2 bg-success-subtle text-dark rounded p-3">
+			<h1>@Model.Value("title")</h1>
+			<p>@Model.Value("mainContent")</p>
+			<p><i>Created on @Model.Value("dateCreated") by @Model.Value("author")</i></p>
+		</div>
+	</div>
+</div>

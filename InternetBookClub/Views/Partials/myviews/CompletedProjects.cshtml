@@ -25,10 +25,17 @@
 
 @if (selectionCompletedProjects?.Length > 0)
 {
-    <ul>
+    <ul class="list-group bs-dark">
+        <h3>Completed Projects</h3>
         @foreach (var item in selectionCompletedProjects)
         {
-            <li><a href="@item.Url(PublishedUrlProvider)">@item.Value("title")</a></li>
+            <div class="p-3 text-primary-emphasis bg-success-subtle border border-secondary rounded-2">
+                <li class="list-group-item">
+                    <a href="@item.Url(PublishedUrlProvider)">@item.Value("title")</a>
+                    <p> Project status: @item.Value("status") </p>
+                </li>
+            </div>
+            <br>
         }
     </ul>
 }

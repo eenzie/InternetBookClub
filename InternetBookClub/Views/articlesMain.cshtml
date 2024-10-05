@@ -5,17 +5,7 @@
     Layout = "master.cshtml";
 }
 
-<h1>@Model.Value("title")</h1>
-<h4>@Model.Value("mainContent")</h4>
-
-<div class="container">
-    <div class="row section">
-        <div class="col-md-12">
-            <h3>Lastest posts</h3>
-        </div>
-    </div>
-
-    <!-- Blog item query -->
+<!-- Blog item query -->
     @{
         var selection = Umbraco.Content(Guid.Parse("5327aa6f-255b-415a-a1ec-3751fa807b75"))
         .ChildrenOfType("articlesItem")
@@ -23,14 +13,27 @@
         .OrderBy(x => x.CreateDate);
     }
 
-    <ul>
-        @foreach (var item in selection)
+<div class="p-2 bg-dark text-white rounded">
+    <h1>@Model.Value("title")</h1>
+    <h4>@Model.Value("mainContent")</h4>
 
-        {
-            <li>
-                <a href="@item.Url()">@item.Value("title")</a>
-                <p> @item.CreateDate </p>
-            </li>
-        }
-    </ul>
+    <div class="row">
+        <div class="col-md-4">
+            <ul class="list-group">
+                <h3>Lastest posts</h3>
+                
+                @foreach (var item in selection)
+                {
+                    <div class="p-3 text-primary-emphasis bg-success-subtle border border-secondary rounded-2">
+
+                    <li class="list-group-item pl-5">
+                        <a href="@item.Url()">@item.Value("title")</a>
+                        <p> @item.CreateDate </p>
+                    </li>
+                    </div>
+                    <br>
+                } 
+            </ul>
+       </div>
+    </div>
 </div>

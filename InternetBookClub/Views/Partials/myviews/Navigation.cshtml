@@ -34,35 +34,42 @@
 
 @if (selection?.Length > 0)
 {
-    <div class="container">
-        <nav class="navbar navbar-expand navbar-light">
+    <nav class="navbar navbar-expand-lg bg-success-subtle navbar-light fixed-top">
+        <div class="container-fluid">
+
             <!-- Nav bar brand item -->
             <a class="navbar-brand font-weight-bold" href="@Model.Root().Url()">Cozy Books</a>
 
-            <!-- Links -->
-            <ul class="navbar-nav">
+            <!-- Nav bar collapse toggle button -->
+            <button class ="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-expanded="false">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarToggler">
 
-                @foreach (var item in selection)
-                {
-                    <li class="@(item.IsAncestorOrSelf(Model) ? "current" : null)">
-                        <a class="nav-link" href="@item.Url(PublishedUrlProvider)">@item.Name</a>
+                <!-- Links -->
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                    @foreach (var item in selection)
+                    {
+                        <li class="@(item.IsAncestorOrSelf(Model) ? "current" : null)">
+                            <a class="nav-link" href="@item.Url(PublishedUrlProvider)">@item.Name</a>
+                        </li>
+                    }
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="@selectionProjectMain.Url()" role="button" data-bs-toggle="dropdown" aria-expanded="false"> @selectionProjectMain.Name</a>
+
+                        <ul class="dropdown-menu">
+                            @foreach (var item in selectionProjects)
+                            {
+                                <li>
+                                    <a class="dropdown-item" href="@item.Url()">@item.Name()</a>
+                                </li>
+                            }
+                        </ul>
                     </li>
-                }
-
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="@selectionProjectMain.Url()" role="button" data-bs-toggle="dropdown" aria-expanded="false"> @selectionProjectMain.Name</a>
-
-                    <ul class="dropdown-menu">
-                        @foreach (var item in selectionProjects)
-                        {
-                            <li>
-                                <a class="dropdown-item" href="@item.Url()">@item.Name()</a>
-                            </li>
-                        }
-                    </ul>
-                </li>
-
-            </ul>
-        </nav>
-    </div>
+                </ul>
+            </div>
+        </div>
+    </nav>
 }

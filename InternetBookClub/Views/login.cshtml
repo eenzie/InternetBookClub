@@ -9,36 +9,26 @@
 	Layout = "master.cshtml";
 }
 
-
 @{
 // ER LOGGET IND? OG HVEM
 var isLoggedIn = Context.User?.Identity?.IsAuthenticated ?? false;  
 var logoutModel = new PostRedirectModel();
-
-// You can modify this to redirect to a different URL instead of the current one logoutModel.RedirectUrl = null;
 }
 
-@if (isLoggedIn)
-
-{
-
-<div class="login-status">
-
-<p>Welcome back <strong>@Context?.User?.Identity?.Name</strong>!</p> 
-@using (Html.BeginUmbracoForm<UmbLoginStatusController>("HandleLogout", new { RedirectUrl = logoutModel.RedirectUrl }))
-{
-<button type="submit" class="btn btn-primary">Log out</button>
-}
-
+<div class="p-2 bg-dark text-white rounded">
+	@if (isLoggedIn)
+	{
+		<div class="login-status">
+			<h5>Welcome back <strong>@Context?.User?.Identity?.Name</strong>!</h5> 
+			<br>
+			@using (Html.BeginUmbracoForm<UmbLoginStatusController>("HandleLogout", new { RedirectUrl = logoutModel.RedirectUrl }))
+			{
+				<button type="submit" class="btn btn-info">Log out</button>
+			}
+		</div>
+	}
+	else
+	{
+		@Html.Partial("~/Views/Partials/myviews/LoginForm.cshtml")
+	}
 </div>
-
-}
-
-else
-
-{
-
-@Html.Partial("~/Views/Partials/myviews/LoginForm.cshtml")
-
-}
-

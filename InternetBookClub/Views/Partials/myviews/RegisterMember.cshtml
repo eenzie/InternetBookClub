@@ -36,14 +36,14 @@
 
 @if (success)
 {
-		var member = Context.User.Identity;
-		if (member!=null) 
-		{
-				var username = member.GetUserName();
-				MemberService.AssignRole(username, "prospect"); //check your role name!!
-				<p>Registration succeeeded.</p>
-				<p>Logged in with @member.Name</p>
-		}
+    var member = Context.User.Identity;
+    if (member!=null) 
+    {
+        var username = member.GetUserName();
+        MemberService.AssignRole(username, "prospect"); //check your role name!!
+        <p>Registration succeeeded.</p>
+        <p>Logged in with @member.Name</p>
+    }
 }
 else
 {
@@ -56,44 +56,49 @@ else
                 AutomaticLogIn = registerModel.AutomaticLogIn
             }))
     {
-        <h2>Create a new account.</h2>
+        <h2>Create a new account</h2>
         <hr />
-        <div asp-validation-summary="All" class="text-danger"></div>
-        <div class="mb-3">
-            <label asp-for="@registerModel.Name" class="form-label"></label>
-            <input asp-for="@registerModel.Name" class="form-control" aria-required="true" />
-            <span asp-validation-for="@registerModel.Name" class="form-text text-danger"></span>
-        </div>
-        <div class="mb-3">
-            <label asp-for="@registerModel.Email" class="form-label"></label>
-            <input asp-for="@registerModel.Email" class="form-control" autocomplete="username" aria-required="true" />
-            <span asp-validation-for="@registerModel.Email" class="form-text text-danger"></span>
-        </div>
-        <div class="mb-3">
-            <label asp-for="@registerModel.Password" class="form-label"></label>
-            <input asp-for="@registerModel.Password" class="form-control" autocomplete="new-password" aria-required="true" />
-            <span asp-validation-for="@registerModel.Password" class="form-text text-danger"></span>
-        </div>
-        <div class="mb-3">
-            <label asp-for="@registerModel.ConfirmPassword" class="form-label"></label>
-            <input asp-for="@registerModel.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
-            <span asp-validation-for="@registerModel.ConfirmPassword" class="form-text text-danger"></span>
-        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="p-2 bg-success-subtle text-dark rounded p-3">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="mb-3">
+                        <label asp-for="@registerModel.Name" class="form-label"></label>
+                        <input asp-for="@registerModel.Name" class="form-control" aria-required="true" />
+                        <span asp-validation-for="@registerModel.Name" class="form-text text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="@registerModel.Email" class="form-label"></label>
+                        <input asp-for="@registerModel.Email" class="form-control" autocomplete="username" aria-required="true" />
+                        <span asp-validation-for="@registerModel.Email" class="form-text text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="@registerModel.Password" class="form-label"></label>
+                        <input asp-for="@registerModel.Password" class="form-control" autocomplete="new-password" aria-required="true" />
+                        <span asp-validation-for="@registerModel.Password" class="form-text text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="@registerModel.ConfirmPassword" class="form-label"></label>
+                        <input asp-for="@registerModel.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
+                        <span asp-validation-for="@registerModel.ConfirmPassword" class="form-text text-danger"></span>
+                    </div>
 
-        @if (registerModel.MemberProperties != null)
-        {
-            for (var i = 0; i < registerModel.MemberProperties.Count; i++)
-            {
-                <div class="mb-3">
-                    @Html.LabelFor(m => registerModel.MemberProperties[i].Value, registerModel.MemberProperties[i].Name)
-                    <input asp-for="@registerModel.MemberProperties[i].Value" class="form-control" />
-                    @Html.HiddenFor(m => registerModel.MemberProperties[i].Alias)
-                    <span asp-validation-for="@registerModel.MemberProperties[i].Value" class="form-text text-danger"></span>
-                </div>
-            }
-        }
-
-        <button type="submit" class="btn btn-primary">Register</button>
-
+                    @if (registerModel.MemberProperties != null)
+                    {
+                        for (var i = 0; i < registerModel.MemberProperties.Count; i++)
+                        {
+                            <div class="mb-3">
+                                @Html.LabelFor(m => registerModel.MemberProperties[i].Value, registerModel.MemberProperties[i].Name)
+                                <input asp-for="@registerModel.MemberProperties[i].Value" class="form-control" />
+                                @Html.HiddenFor(m => registerModel.MemberProperties[i].Alias)
+                                <span asp-validation-for="@registerModel.MemberProperties[i].Value" class="form-text text-danger"></span>
+                            </div>
+                        }
+                    }
+                    <br>
+                    <button type="submit" class="btn btn-dark">Register</button>
+                </div>  
+            </div>
+        </div>
     }
 }

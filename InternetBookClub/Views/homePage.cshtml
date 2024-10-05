@@ -4,8 +4,20 @@
 	Layout = "master.cshtml";
 }
 
-<h1>@Model.Value("siteTitle")</h1>
+@{
+	// Gets the content image
+    var image = Model.Value<IPublishedContent>("image");
 
-<br>
+	// Checks that image is not null and, if true, retrieved the URL for the image. But if false it returns an empty string (to avoid null ref. except.)
+    string imageUrl = image?.Url() ?? string.Empty;
+}
+
+<div class="p-2 bg-dark text-white rounded">
+    <h1>@Model.Value("siteTitle")</h1>
+    <br>
     <h1>@Model.Value("title")</h1>
     <h4>@Model.Value("mainContent")</h4>
+
+	<h4> @Model.Value("text") </h4>
+	<img class="img-fluid" src="@imageUrl" style="width:1000px;" />
+</div>

@@ -13,26 +13,41 @@
 var activeMembers = MemberService.GetMembersByGroup("Active");
 var prospectMembers = MemberService.GetMembersByGroup("Prospect");
 }
-
-<h4> Prospect Members </h4>
-@foreach (var prospect in prospectMembers) 
-{
-	<p>
-	@(prospect.GetValue("firstName") + " "
-	+ prospect.GetValue("lastName")) <br/>
-	Mobile: @prospect.GetValue("mobile")<br />
-	</p>
-}
-<br>
-<h4> Active Members </h4>
-@foreach (var active in activeMembers) 
-{
-	<p>
-	@(active.GetValue("firstName") + " "
-	+ active.GetValue("lastName")) <br/>
-	@active.GetValue("address")<br />
-	@(active.GetValue("postCode") + " "
-	+ active.GetValue("city"))
-	Mobile: @active.GetValue("mobile")<br />
-	</p>
-}
+<div class="row">
+    <div class="col-md-2">
+        <div class="p-2 bg-dark text-white rounded">
+            <h4> Prospect Members </h4>
+            @foreach (var prospect in prospectMembers) 
+            {
+                <div class="p-3 text-primary-emphasis bg-success-subtle border border-secondary rounded-2">
+                    <p>
+                    @(prospect.GetValue("firstName") + " "
+                    + prospect.GetValue("lastName")) <br/>
+                    Mobile: @prospect.GetValue("mobile")<br />
+                    </p>
+                </div>
+                <br>
+            }
+            <br>
+            <h4> Active Members </h4>
+            @foreach (var active in activeMembers) 
+            {
+                <div class="p-3 text-primary-emphasis bg-success-subtle border border-secondary rounded-2">
+                    <p>
+                    @(active.GetValue("firstName") + " "
+                    + active.GetValue("lastName")) <br/>
+                    @active.GetValue("address") <br />
+                    @(active.GetValue("postCode") + " "
+                    + active.GetValue("city")) <br/>
+                    Mobile: @active.GetValue("mobile")<br />
+                    @{
+                        var memberImage = active.GetValue<string>("photo");
+                    }
+                        <img src="@(memberImage != null ? memberImage : "")" style="width:200px;" />
+                    </p>
+                </div>
+                <br>
+            }
+        </div>
+    </div>
+</div>
