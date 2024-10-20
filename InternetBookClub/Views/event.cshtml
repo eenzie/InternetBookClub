@@ -13,21 +13,36 @@
     <div class="col-md-6">
 		<div class="p-2 bg-success-subtle text-dark rounded p-3">
 			<h1>@Model.Value("eventTitle")</h1>
-			<h5>@Model.Value("eventDescription")</h5>
-			<p>Event date: @Model.Value("eventDate")</p>
-			
-			<!-- Speaker of event -->
-			<div class="p-2 bg-success-subtle text-dark rounded p-3">
-				<h4>Speakers </h4>
-				@if (speakers != null)
+			<h4>@Model.Value("eventDescription")</h4>
+			<h6>Date: </h6> @Model.Value("eventDate")
+			<hr class="hr" />
+
+			<!-- Event location -->
+			<h3>Location </h3>
+			@{
+				IPublishedContent location = Model.Value<IPublishedContent>("location");
+		
+				if (location!=null)
 				{
-					foreach (var speaker in speakers)
-						{
-							<h5>@speaker.Value("firstName") @speaker.Value("lastName") </h5> 
-							<b>Bio: </b>  @speaker.Value("speakerBio")
-						}
+					<p>
+					@location.Name (@location.Value("building")) - 
+					@location.Value("address") ,
+					@location.Value("postCode") @location.Value("city")
+					</p>					
 				}
-			</div>
+			}
+			<hr class="hr" />
+
+			<!-- Speaker of event -->
+			<h3>Speakers </h3>
+			@if (speakers != null)
+			{
+				foreach (var speaker in speakers)
+				{
+					<h5>@speaker.Value("firstName") @speaker.Value("lastName") </h5> 
+					<h6>Bio: </h6>  @speaker.Value("speakerBio")
+				}
+			}
 		</div>
 	</div>
 </div>
