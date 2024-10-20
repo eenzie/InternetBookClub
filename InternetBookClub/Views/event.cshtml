@@ -1,0 +1,33 @@
+﻿@using Umbraco.Cms.Core.Models.Blocks
+@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+	Layout = "master.cshtml";
+}
+
+@{
+	var speakers = Model.Value<IEnumerable<BlockListItem>>("speakers").Select(x => x.Content);
+}
+
+<div class="row">
+    <div class="col-md-6">
+		<div class="p-2 bg-success-subtle text-dark rounded p-3">
+			<h1>@Model.Value("eventTitle")</h1>
+			<h5>@Model.Value("eventDescription")</h5>
+			<p>Event date: @Model.Value("eventDate")</p>
+			
+			<!-- Speaker of event -->
+			<div class="p-2 bg-success-subtle text-dark rounded p-3">
+				<h4>Speakers </h4>
+				@if (speakers != null)
+				{
+					foreach (var speaker in speakers)
+						{
+							<h5>@speaker.Value("firstName") @speaker.Value("lastName") </h5> 
+							<b>Bio: </b>  @speaker.Value("speakerBio")
+						}
+				}
+			</div>
+		</div>
+	</div>
+</div>

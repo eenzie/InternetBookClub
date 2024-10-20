@@ -6,6 +6,7 @@
 
 @inject IPublishedValueFallback PublishedValueFallback
 @inject IPublishedUrlProvider PublishedUrlProvider
+
 @*
     This snippet displays a list of links of the pages immediately under the top-most page in the content tree.
     This is the home page for a standard website.
@@ -20,6 +21,7 @@
     var selection = Model.Root()
                         .Children
                         .Where(x => x.IsVisible(PublishedValueFallback))
+                        .OrderBy(x => x.Name)
                         .ToArray(); 
 
     var selectionProjects = Umbraco.Content(Guid.Parse("06aec5ae-d274-4a3c-b691-a84f241cd2bb"))

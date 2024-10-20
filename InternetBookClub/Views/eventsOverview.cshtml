@@ -1,0 +1,41 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+	Layout = "master.cshtml";
+}
+
+<!-- Event item query -->
+@{
+	var selection = Umbraco.Content(Guid.Parse("b63500d3-ba65-4a03-b6a1-97961cabdf52"))
+    .ChildrenOfType("event")
+    .Where(x => x.IsVisible())
+    .OrderBy(x => x.CreateDate);
+}
+
+<div class="p-2 bg-dark text-white rounded">
+    <h1>@Model.Value("title")</h1>
+    <h4>@Model.Value("mainContent")</h4>
+
+    <div class="row">
+        <div class="col-md-4">
+            <ul class="list-group">
+                <h3>Lastest events</h3>
+                
+                @foreach (var item in selection)
+                {
+                    <div class="p-3 text-primary-emphasis bg-success-subtle border border-secondary rounded-2">
+
+                    <li class="list-group-item pl-5">
+                        <a href="@item.Url()">@item.Value("eventTitle")</a>
+                        <p> 
+                            Event date: @item.Value("eventDate") <br>
+                            Created:  @item.CreateDate 
+                        </p>
+                    </li>
+                    </div>
+                    <br>
+                } 
+            </ul>
+       </div>
+    </div>
+</div>
