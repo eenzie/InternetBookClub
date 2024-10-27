@@ -1,7 +1,13 @@
 ﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@using Umbraco.Cms.Core.PublishedCache
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+
+@inject ITagQuery TagQuery;
+
 @{
 	Layout = "master.cshtml";
+	
+	var articleTags = Model.Value<IEnumerable<string>>("tags");
 }
 
 <div class="row">
@@ -10,6 +16,26 @@
 			<h1>@Model.Value("title")</h1>
 			<p>@Model.Value("mainContent")</p>
 			<p><i>Created on @Model.Value("dateCreated") by @Model.Value("author")</i></p>
+			@if(Model.HasValue("tags"))
+			{
+				<h5> Other content with tags </h5>
+				<ul style="list-style-type: none; padding-left: 0;">
+					@foreach(var tag in articleTags)
+					{
+						var taggedContent = TagQuery.GetContentByTag(tag); 
+						<li><h6>
+							@tag
+							@foreach (var content in taggedContent)
+							{
+								if(content.Url() != Model.Url())
+								{
+								<a href="@content.Url()" class="btn btn-sm btn-subtle border border-dark">@content.Value("title")</a>
+								}
+							}
+						</h6></li>
+					}
+				</ul>
+			}
 		</div>
 	</div>
 </div>
